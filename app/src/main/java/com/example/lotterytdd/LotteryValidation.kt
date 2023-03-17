@@ -6,29 +6,47 @@ interface LotteryValidation {
 
     class Base : LotteryValidation {
         override fun isBingo(number: Int): Boolean {
-            if (number < 10)
-                throw IllegalStateException()
-            if (number >= 9999_9999) {
+            if (number < 10 || number >= 9999_9999) {
                 throw IllegalStateException()
             }
-            val text = number.toString()
-            if (text.length % 2 == 1) {
+            val digits = mutableListOf<Int>()
+
+            var temp = number
+
+            while (temp > 0) {
+                val rest = temp % 10
+                digits.add(rest)
+                temp /= 10
+            }
+            if (digits.size % 2 == 1) {
                 throw IllegalStateException()
             }
-            val left = text.substring(0, text.length / 2)
-            val right = text.substring(text.length / 2)
 
-            var sumLeft = 0
-            var sumRight = 0
-
-            left.forEach {
-                sumLeft += it.toString().toInt()
+            var sum = 0
+            digits.forEachIndexed { index, digit ->
+                if (index < digits.size / 2)
+                    sum += digit
+                else {
+                    sum -= digit
+                    if (sum < 0) return false
+                }
             }
-            right.forEach {
-                sumRight += it.toString().toInt()
-            }
-
-            return sumLeft == sumRight
+            return sum == 0
         }
     }
 }
+
+//            var sumLeft = 0
+//            var sumRight = 0
+//
+//            left.forEach {
+//                sumLeft += it.toString().toInt()
+//            }
+//            right.forEach {
+//                sumRight += it.toString().toInt()
+//            }
+//
+//            return sumLeft == sumRight
+//        }
+//    }
+//}
