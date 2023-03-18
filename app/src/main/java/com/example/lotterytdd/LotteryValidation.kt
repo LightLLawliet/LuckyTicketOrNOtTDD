@@ -35,18 +35,3 @@ interface LotteryValidation {
         }
     }
 }
-
-//            var sumLeft = 0
-//            var sumRight = 0
-//
-//            left.forEach {
-//                sumLeft += it.toString().toInt()
-//            }
-//            right.forEach {
-//                sumRight += it.toString().toInt()
-//            }
-//
-//            return sumLeft == sumRight
-//        }
-//    }
-//}
